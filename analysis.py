@@ -194,6 +194,8 @@ def Xeq(Aspen, Asp, T_list, P_list, n_in):
                     n_out_i.append(Aspen.Application.Tree.FindNode("\Data\Model Analysis Tools\Sensitivity\XEQ\Output\SENSVAR").Elements.Item(str(j * len(T_list) + i + 1), str(k+3)).Value)
                 n_out.append(n_out_i)
     except AttributeError:
+        aspen_tools.reset(Asp)
+        aspen_tools.run_sim(Asp)
         n_out = []
         for j in range(len(P_list)):
             for i in range(len(T_list)):

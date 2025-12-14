@@ -39,6 +39,7 @@ def cd_simulation(Asp):
     try:
         Asp.children()[3].children()[0].children()[7].select()  # 6=Properties 7=Simulation
     except:
+        print("cd_simulation")
         time.sleep(1)
         pywinauto.mouse.click(coords=(100, 830))
 
@@ -46,6 +47,7 @@ def cd_properties(Asp):
     try:
         Asp.children()[3].children()[0].children()[6].select()
     except:
+        print("cd_properties")
         time.sleep(1)
         pywinauto.mouse.click(coords=(100, 780))
         
@@ -74,6 +76,7 @@ def run(Asp):
     try:
         Asp.child_window(auto_id="igRibbon_QuickAccessToolbar_1", control_type="ToolBar").child_window(title="Run", auto_id="igRibbon_btnRunProp", control_type="Button").click()
     except:
+        print("run")
         Asp.set_focus()
         mouse.click(button='left', coords=(190, 8))    
     time.sleep(2)
@@ -91,6 +94,7 @@ def run_sim(Asp):
         control_type="Button"
         ).click()
     except:
+        print("run_sim")
         Asp.set_focus()
         mouse.click(button='left', coords=(230, 75))
     time.sleep(2)
@@ -156,29 +160,26 @@ class FindCompounds:
         close_btn.click()
         
 def click_comp_cell(Asp,index):
-    x = 855
-    base_y = 275
-    step = 25
-    y = base_y + (index - 1) * step
+    found_index = index*5-5
     Asp.set_focus()
-    time.sleep(0.2)
-    mouse.click(button='left', coords=(x, y))
+    cell = Asp.child_window(class_name="GridControlCell", control_type="Custom",found_index=found_index).click_input()
+    time.sleep(0.5)
 
-def click_nrtl():
-    mouse.click(button='left', coords=(115,470))
-    time.sleep(0.2)
-    mouse.click(button='left', coords=(480,105))
-    time.sleep(0.3)
-    mouse.click(button='left', coords=(960,675))
-    time.sleep(2)
-    mouse.click(button='left', coords=(1000,560))
+# def click_nrtl():
+#     mouse.click(button='left', coords=(115,470))
+#     time.sleep(0.2)
+#     mouse.click(button='left', coords=(480,105))
+#     time.sleep(0.3)
+#     mouse.click(button='left', coords=(960,675))
+#     time.sleep(2)
+#     mouse.click(button='left', coords=(1000,560))
     
 def input_CAS_COMP_list(Aspen,Asp, CAS_list):
     results = []
     n=len(CAS_list)
     Asp.set_focus()
     fc = FindCompounds(Asp)
-    time.sleep(10)
+    time.sleep(5)
     for i,CAS in enumerate(CAS_list):
         click_comp_cell(Asp, i+1)
         click_Find(Asp)
@@ -190,8 +191,12 @@ def input_CAS_COMP_list(Aspen,Asp, CAS_list):
         if is_match:
             fc.add_comp()
         fc.close_fc()
-        mouse.click(button='left', coords=(725, 535))
-        mouse.click(button='left', coords=(1060, 560))
+        try:
+            Asp.set_focus()
+            Asp.child_window(auto_id="chkDontshow",control_type="CheckBox").click_input()
+            Asp.child_window(auto_id="btn0",control_type="Button").click_input()
+        except:
+            pass
     time.sleep(1)    
     for _ in range(10-n):
         Aspen.Application.Tree.Data.Components.Specifications.Input.TYPE.Elements.RemoveRow(0,n)
@@ -201,7 +206,8 @@ def input_CAS_COMP_list(Aspen,Asp, CAS_list):
     for comp, CAS, id, status in results:
         print(f"{comp:<10} | {CAS:<12} | {id:<10} | {status}")
     print("=" * 65)
-    click_nrtl()
+    time.sleep(1)
+    Asp.child_window(title="NRTL-1",control_type="TreeItem").click_input()
     for i in range(n):
         Aspen.Application.Tree.FindNode(f"\Data\Properties\Analysis\MIX-1\Input\FLOW\COMP{i+1}").Value = 1
     Asp.child_window(auto_id="igRibbon_QuickAccessToolbar_1", control_type="ToolBar").child_window(title="Save",auto_id="igRibbon_ButtonTool_3",control_type="Button").click()
@@ -209,14 +215,24 @@ def input_CAS_COMP_list(Aspen,Asp, CAS_list):
     Asp.child_window(auto_id="MMTabItem_2", control_type="TabItem").select()
     for i in range(10, n, -1):
             delete_C(Asp, i)
+# def delete_C(Asp,n):
+#     x = 300
+#     base_y = 300
+#     step = 25
+#     y = base_y + (n - 1) * step
+#     Asp.set_focus()
+#     time.sleep(0.2)
+#     mouse.click(button='left', coords=(x, y))
+#     Asp.child_window(title="cmdDelete", control_type="Custom").child_window(auto_id="PART_BUTTON", control_type="Button").click()
+#     time.sleep(0.2)
+#     Asp.child_window(title="Confirm", control_type="Window").child_window(auto_id="btn0", control_type="Button").click()
+#     time.sleep(0.2)
+#     Asp.child_window(auto_id="igRibbon_QuickAccessToolbar_1", control_type="ToolBar").child_window(title="Save",auto_id="igRibbon_ButtonTool_3",control_type="Button").click()
 def delete_C(Asp,n):
-    x = 300
-    base_y = 300
-    step = 25
-    y = base_y + (n - 1) * step
     Asp.set_focus()
     time.sleep(0.2)
-    mouse.click(button='left', coords=(x, y))
+    cells = Asp.child_window(class_name="GridControlCell",control_type="Custom",found_index=n*2-1)
+    cells.click_input()
     Asp.child_window(title="cmdDelete", control_type="Custom").child_window(auto_id="PART_BUTTON", control_type="Button").click()
     time.sleep(0.2)
     Asp.child_window(title="Confirm", control_type="Window").child_window(auto_id="btn0", control_type="Button").click()
