@@ -37,19 +37,21 @@ def click_components(Asp):
     
 def cd_simulation(Asp):
     try:
+        Asp.set_focus()
         Asp.children()[3].children()[0].children()[7].select()  # 6=Properties 7=Simulation
     except:
         print("cd_simulation")
         time.sleep(1)
-        pywinauto.mouse.click(coords=(100, 830))
+        #pywinauto.mouse.click(coords=(100, 830))
 
 def cd_properties(Asp):
     try:
+        Asp.set_focus()
         Asp.children()[3].children()[0].children()[6].select()
     except:
         print("cd_properties")
         time.sleep(1)
-        pywinauto.mouse.click(coords=(100, 780))
+        #pywinauto.mouse.click(coords=(100, 780))
         
 def click_review(Asp):
     while True:
@@ -74,17 +76,19 @@ def reset(Asp):
 
 def run(Asp):
     try:
+        Asp.set_focus()
         Asp.child_window(auto_id="igRibbon_QuickAccessToolbar_1", control_type="ToolBar").child_window(title="Run", auto_id="igRibbon_btnRunProp", control_type="Button").click()
     except:
         print("run")
         Asp.set_focus()
-        mouse.click(button='left', coords=(190, 8))    
+        #mouse.click(button='left', coords=(190, 8))    
     time.sleep(2)
 
         
     
 def run_sim(Asp):
     try:
+        Asp.set_focus()
         Asp.child_window(
         auto_id="igRibbon_QuickAccessToolbar_1",
         control_type="ToolBar"
@@ -96,7 +100,7 @@ def run_sim(Asp):
     except:
         print("run_sim")
         Asp.set_focus()
-        mouse.click(button='left', coords=(230, 75))
+        #mouse.click(button='left', coords=(230, 75))
     time.sleep(2)
     
 
@@ -180,6 +184,7 @@ def input_CAS_COMP_list(Aspen,Asp, CAS_list):
     Asp.set_focus()
     fc = FindCompounds(Asp)
     time.sleep(5)
+    Asp.set_focus()
     for i,CAS in enumerate(CAS_list):
         click_comp_cell(Asp, i+1)
         click_Find(Asp)
