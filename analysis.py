@@ -132,6 +132,12 @@ def Bmix(Aspen, Asp, T_list, P_list, n_list,NCOMP):
     Aspen.Application.Tree.FindNode(r"\Data\Properties\Analysis\MIX-1\Input\LOWER\#1").Value = T_list[0]
     Aspen.Application.Tree.FindNode(r"\Data\Properties\Analysis\MIX-1\Input\UPPER\#1").Value = T_list[-1]
     Aspen.Application.Tree.FindNode(r"\Data\Properties\Analysis\MIX-1\Input\NPOINT\#1").Value = len(T_list) - 1
+    x = Aspen.Application.Tree.FindNode("\Data\Properties\Analysis\MIX-1\Input\LIST\#0").Elements.Count
+    for _ in range(x):
+        Aspen.Application.Tree.FindNode("\Data\Properties\Analysis\MIX-1\Input\LIST\#0").Elements.RemoveRow(0,0)
+    for _ in range(len(P_list)):
+        Aspen.Application.Tree.FindNode("\Data\Properties\Analysis\MIX-1\Input\LIST\#0").Elements.InsertRow(0,0)
+    
 
     for pi, P in enumerate(P_list):
         Aspen.Application.Tree.FindNode(f"\Data\Properties\Analysis\MIX-1\Input\LIST\#0\#{pi}").Value = P
@@ -168,6 +174,11 @@ def Xeq(Aspen, Asp, T_list, P_list, n_in):
     aspen_tools.cd_simulation(Asp)
     for i, a in enumerate(n_in):
         Aspen.Application.Tree.FindNode(f"\Data\Streams\FEED\Input\FLOW\MIXED\COMP{i+1}").Value = a
+    x = Aspen.Application.Tree.FindNode("\Data\Model Analysis Tools\Sensitivity\XEQ\Input\LIST\#0").Elements.Count
+    for _ in range(x):
+        Aspen.Application.Tree.FindNode("\Data\Model Analysis Tools\Sensitivity\XEQ\Input\LIST\#0").Elements.RemoveRow(0,0)
+    for _ in range(len(P_list)):
+        Aspen.Application.Tree.FindNode("\Data\Model Analysis Tools\Sensitivity\XEQ\Input\LIST\#0").Elements.InsertRow(0,0)
     for pi, P in enumerate(P_list):
         Aspen.Application.Tree.FindNode(
             f"\Data\Model Analysis Tools\Sensitivity\XEQ\Input\LIST\#0\#{pi}"
@@ -369,9 +380,17 @@ def calc_work(Aspen, Asp, Aspen_path,T_list, P_list, Tb_list, n_in, n_out,f,NCOM
     W_S_sgen = W_S.applymap(lambda x: x * 1/f if x >= 0 else x*f)
     W_CD_sgen = W_CD.applymap(lambda x: x * 1/f if x >= 0 else x*f)
 
+    n_out_1 = [item[0] for item in n_out]
+    n_in_1 = n_in[0]  
+    n_out_1_df = pd.DataFrame(np.array(n_out_1).reshape(len(P_list), len(T_list))).T
+
     W_total = W_HC_sgen + W_M_sgen + W_R_sgen + W_S_sgen + W_CD_sgen
     W_rev = W_HC + W_M + W_R + W_S + W_CD
-    return Aspen,Asp,W_total, W_rev, W_HC_sgen, W_M_sgen, W_R_sgen, W_S_sgen, W_CD_sgen
+    
+    CF = (n_out_1_df - n_in_1 + 0.00321 * W_total) / n_in_1
+    CF_delta = (n_out_1_df - n_in_1 + 0.00321 * W_total) / (n_in_1-n_out_1_df)
+
+    return Aspen,Asp,W_total, W_rev, W_HC_sgen, W_M_sgen, W_R_sgen, W_S_sgen, W_CD_sgen, CF, CF_delta
 
 
 def compute_Xeq_df(n_out, n_in, T_list, P_list, comp_index):
@@ -391,7 +410,7 @@ def compute_Xeq_df(n_out, n_in, T_list, P_list, comp_index):
     return df
 
 
-def export_to_excel(filename, T_list, P_list,Tb_list, Xeq,W_total, W_rev, W_HC_sgen, W_M_sgen, W_R_sgen, W_S_sgen, W_CD_sgen,):
+def export_to_excel(filename, T_list, P_list,Tb_list, Xeq,W_total, W_rev, W_HC_sgen, W_M_sgen, W_R_sgen, W_S_sgen, W_CD_sgen,CF, CF_delta):
     with pd.ExcelWriter(filename, engine="openpyxl") as writer:
         sheet_name = "Results"
         startcol = 0
@@ -403,6 +422,8 @@ def export_to_excel(filename, T_list, P_list,Tb_list, Xeq,W_total, W_rev, W_HC_s
             "W_R_sgen": W_R_sgen,
             "W_S_sgen": W_S_sgen,
             "W_CD_sgen": W_CD_sgen,
+            "CF": CF,
+            "CF_delta": CF_delta
         }
 
         for name, df in data_dict.items():
