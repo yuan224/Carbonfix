@@ -1,0 +1,10 @@
+SLAVE:
+INPUT: _4435pnj.inm
+MODNAME: apmain
+RUNID: _4435pnj
+NEW_RUNID: _4435pnj
+OLD_RUNID: _4435pnj
+PDF: _4435pnj.appdf
+USERNAME: user
+XMOD: C:\Program Files\AspenTech\Aspen Plus V12.0\Engine\xeq\apmain
+DBCONN: _4435pnj.ads

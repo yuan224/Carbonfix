@@ -1,0 +1,260 @@
+
+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+ + +                                                                         + +
+ + +                      ASPEN PLUS CALCULATION HISTORY                     + +
+ + +                                                                         + +
+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
+
+ ASPEN PLUS IS A TRADEMARK OF           HOTLINE:
+ ASPEN TECHNOLOGY, INC.                 U.S.A. 888/996-7100
+ 781/221-6400                           EUROPE (44) 1189-226555
+
+ PLATFORM: WIN-X64                                       DECEMBER 31, 2025   
+ VERSION: 38.0   Build 380                               WEDNESDAY   
+ INSTALLATION:                                           3:54:12 P.M.        
+
+ THIS COPY OF ASPEN PLUS LICENSED TO NATIONAL TAIWAN UNIV            
+
+
+      ASPEN PLUS (R) IS A PROPRIETARY PRODUCT OF ASPEN TECHNOLOGY, INC.
+      (ASPENTECH), AND MAY BE USED ONLY UNDER AGREEMENT WITH ASPENTECH.
+      RESTRICTED RIGHTS LEGEND:  USE, REPRODUCTION, OR DISCLOSURE BY THE
+      U.S. GOVERNMENT IS SUBJECT TO RESTRICTIONS SET FORTH IN 
+      (i) FAR 52.227-14, Alt. III, (ii) FAR 52.227-19, (iii) DFARS 
+      252.227-7013(c)(1)(ii), or (iv) THE ACCOMPANYING LICENSE AGREEMENT,
+      AS APPLICABLE. FOR PURPOSES OF THE FAR, THIS SOFTWARE SHALL BE DEEMED
+      TO BE "UNPUBLISHED" AND LICENSED WITH DISCLOSURE PROHIBITIONS.
+      CONTRACTOR/SUBCONTRACTOR: ASPEN TECHNOLOGY, INC. 20 CROSBY DRIVE,
+      BEDFORD, MA 01730.
+ *** INPUT SUMMARY ***
+
+ >>CURRENT RUN
+
+   ORIGINAL RUN                           DECEMBER 31, 2025   
+   3:54:12 P.M.                           WEDNESDAY   
+   INPUT FILE: _4435pnj.inm
+   RUN ID : _4435pnj
+          1    ;
+          2    ;Input file created by Aspen Plus Rel. 38.0 at 15:54:12 Wed Dec 31, 2025
+          3    ;Directory C:\Users\user\Documents\Carbonfix_package\test  Runid TEST
+          4    ;
+          5
+          6
+          7    PROP
+          8
+          9    DYNAMICS
+         10        DYNAMICS RESULTS=ON
+         11
+         12    IN-UNITS MET PRESSURE=bar TEMPERATURE=C DELTA-T=C PDROP=bar  &
+         13            INVERSE-PRES='1/bar' SHORT-LENGTH=mm
+         14
+         15    DATABANKS 'APV120 PURE38' / 'APV120 AQUEOUS' / 'APV120 SOLIDS' &
+         16             / 'APV120 INORGANIC' / 'APESV120 AP-EOS' /  &
+         17            'NISTV120 NIST-TRC' / NOASPENPCD
+         18
+         19    PROP-SOURCES 'APV120 PURE38' / 'APV120 AQUEOUS' /  &
+         20            'APV120 SOLIDS' / 'APV120 INORGANIC' / 'APESV120 AP-EOS' &
+         21             / 'NISTV120 NIST-TRC'
+         22
+         23    COMPONENTS
+         24        COMP1 H2 /
+         25        COMP2 CO2 /
+         26        COMP3 CH4O /
+         27        COMP4 H2O
+         28
+         29    PROPERTIES NRTL
+         30
+         31    PROP-REPLACE NRTL NRTL
+         32        MODEL ESPRV2
+         33        MODEL ESPRV20
+         34
+         35    PROP-DATA NRTL-1
+         36        IN-UNITS MET PRESSURE=bar TEMPERATURE=C DELTA-T=C PDROP=bar  &
+         37            INVERSE-PRES='1/bar' SHORT-LENGTH=mm
+         38        PROP-LIST NRTL
+         39        BPVAL COMP2 COMP3 3.398230000 36.69600000 .1000000000 0.0  &
+         40            0.0 0.0 -45.01500000 18.00000000
+         41        BPVAL COMP3 COMP2 -2.440140000 239.2720000 .1000000000 0.0  &
+         42            0.0 0.0 -45.01500000 18.00000000
+         43        BPVAL COMP2 COMP4 10.06400000 -3268.135000 .2000000000 0.0  &
+         44            0.0 0.0 0.0 200.0000000
+         45        BPVAL COMP4 COMP2 10.06400000 -3268.135000 .2000000000 0.0  &
+         46            0.0 0.0 0.0 200.0000000
+         47        BPVAL COMP3 COMP4 -.6930000000 172.9871000 .3000000000 0.0  &
+         48            0.0 0.0 24.99000000 100.0000000
+         49        BPVAL COMP4 COMP3 2.732200000 -617.2687000 .3000000000 0.0  &
+         50            0.0 0.0 24.99000000 100.0000000
+         51
+         52    PROP-SET PS-1 AVAILMX UNITS='kJ/mol' SUBSTREAM=MIXED
+         53
+         54    PROPERTY-REP PCES NOPARAM-PLUS
+         55
+         56    PROP-TABLE PURE-B PROPS
+         57        IN-UNITS MET TEMPERATURE=K DELTA-T=C PDROP=bar  &
+         58            INVERSE-PRES='1/bar' SHORT-LENGTH=mm
+         59        ANALYSIS ANAL-TYPE=PURE PURE-PROP='AVAIL' UNITS='kJ/mol'  &
+         60            PURE-PHASES= V L
+         61        MOLE-FLOW COMP1 1 / COMP2 1 / COMP3 1 / COMP4 1
+         62        PROPERTIES NRTL FREE-WATER=STEAM-TA SOLU-WATER=3  &
+         63            TRUE-COMPS=YES
+         64        VARY TEMP
+         65        RANGE VARVALUE=RANGE LOWER=298. UPPER=488. NPOINT=19
+         66        VARY PRES
+         67        RANGE LIST=50.
+         68        PARAM
+         69
+         70    PROP-TABLE PURE-G PROPS
+         71        IN-UNITS MET TEMPERATURE=K DELTA-T=C PDROP=bar  &
+         72            INVERSE-PRES='1/bar' SHORT-LENGTH=mm
+         73        ANALYSIS ANAL-TYPE=PURE PURE-PROP='G' UNITS='kJ/mol'  &
+         74            PURE-PHASES= V L
+         75        MOLE-FLOW COMP1 1 / COMP2 1 / COMP3 1 / COMP4 1
+         76        PROPERTIES NRTL FREE-WATER=STEAM-TA SOLU-WATER=3  &
+         77            TRUE-COMPS=YES
+         78        VARY TEMP
+         79        RANGE VARVALUE=RANGE LOWER=298. UPPER=488. NPOINT=200
+         80        VARY PRES
+         81        RANGE LIST=50.
+         82        PARAM
+         83
+         84    PROP-TABLE MIX-1 FLASHCURVE
+         85        IN-UNITS MET TEMPERATURE=K DELTA-T=C PDROP=bar  &
+         86            INVERSE-PRES='1/bar' SHORT-LENGTH=mm
+         87        MOLE-FLOW COMP1 9.0938375367 / COMP2 3.0312791789 / COMP3  &
+         88            1. / COMP4 1.
+         89        VARY PRES
+         90        RANGE VARVALUE=LIST LIST=1. 5. 10. 25. 50.
+         91        VARY TEMP
+         92        RANGE VARVALUE=RANGE LOWER=298. UPPER=488. NPOINT=19
+         93        PARAM
+         94        TABULATE PROPERTIES=PS-1
+         95    ;
+         96    ;
+         97    ;
+         98    ;
+         99    ;
+ *** INPUT TRANSLATOR MESSAGES ***
+
+  *** THIS RUN USES THE PROPERTIES ENTERPRISE DATABASE ***
+      SQLLOCALDB.APESV120 : (DATAVERSION - 38.0.0.14)                         
+      SQLLOCALDB.APV120 : (DATAVERSION - 38.0.0.20)                           
+      SQLLOCALDB.FACTV120 : (DATAVERSION - 38.0.0.1)                          
+      SQLLOCALDB.NISTV120 : (DATAVERSION - 38.0.0.12)                         
+
+ PDF updated                                                                      TIME =      0.34
+
+ *** CALCULATION TRACE ***
+
+
+
+ Table Generation begins                                                          Time =      0.01
+
+      BEGIN CALCULATIONS FOR PROP-TABLE PURE-B                                    TIME =      0.01
+
+      BEGIN CALCULATIONS FOR PROP-TABLE PURE-G                                    TIME =      0.01
+
+      BEGIN CALCULATIONS FOR PROP-TABLE MIX-1                                     TIME =      0.02
+      KODE = 2  NTRIAL =   5  T = 298.0000  P =  101325.      V = 0.932836      Q =  0.00000    
+      KODE = 2  NTRIAL =   5  T = 308.0000  P =  101325.      V = 0.969150      Q =  7343.31    
+      KODE = 2  NTRIAL =   5  T = 318.0000  P =  101325.      V =  1.00000      Q =  6467.06    
+      KODE = 2  NTRIAL =   4  T = 328.0000  P =  101325.      V =  1.00000      Q =  1278.32    
+      KODE = 2  NTRIAL =   4  T = 338.0000  P =  101325.      V =  1.00000      Q =  1285.26    
+      KODE = 2  NTRIAL =   4  T = 348.0000  P =  101325.      V =  1.00000      Q =  1292.06    
+      KODE = 2  NTRIAL =   4  T = 358.0000  P =  101325.      V =  1.00000      Q =  1298.72    
+      KODE = 2  NTRIAL =   5  T = 368.0000  P =  101325.      V =  1.00000      Q =  1305.22    
+      KODE = 2  NTRIAL =   5  T = 378.0000  P =  101325.      V =  1.00000      Q =  1311.57    
+      KODE = 2  NTRIAL =   5  T = 388.0000  P =  101325.      V =  1.00000      Q =  1317.75    
+      KODE = 2  NTRIAL =   5  T = 398.0000  P =  101325.      V =  1.00000      Q =  1323.77    
+      KODE = 2  NTRIAL =   5  T = 408.0000  P =  101325.      V =  1.00000      Q =  1329.64    
+      KODE = 2  NTRIAL =   5  T = 418.0000  P =  101325.      V =  1.00000      Q =  1335.35    
+      KODE = 2  NTRIAL =   5  T = 428.0000  P =  101325.      V =  1.00000      Q =  1340.92    
+      KODE = 2  NTRIAL =   5  T = 438.0000  P =  101325.      V =  1.00000      Q =  1346.36    
+      KODE = 2  NTRIAL =   5  T = 448.0000  P =  101325.      V =  1.00000      Q =  1351.66    
+      KODE = 2  NTRIAL =   5  T = 458.0000  P =  101325.      V =  1.00000      Q =  1356.84    
+      KODE = 2  NTRIAL =   5  T = 468.0000  P =  101325.      V =  1.00000      Q =  1361.91    
+      KODE = 2  NTRIAL =   5  T = 478.0000  P =  101325.      V =  1.00000      Q =  1366.88    
+      KODE = 2  NTRIAL =   5  T = 488.0000  P =  101325.      V =  1.00000      Q =  1371.75    
+      KODE = 2  NTRIAL =   5  T = 298.0000  P =  506625.      V = 0.871344      Q = -46510.3    
+      KODE = 2  NTRIAL =   5  T = 308.0000  P =  506625.      V = 0.886512      Q =  4002.64    
+      KODE = 2  NTRIAL =   5  T = 318.0000  P =  506625.      V = 0.906070      Q =  4458.17    
+      KODE = 2  NTRIAL =   5  T = 328.0000  P =  506625.      V = 0.931035      Q =  5286.45    
+      KODE = 2  NTRIAL =   5  T = 338.0000  P =  506625.      V = 0.961401      Q =  6152.61    
+      KODE = 2  NTRIAL =   5  T = 348.0000  P =  506625.      V = 0.998565      Q =  7257.09    
+      KODE = 2  NTRIAL =   5  T = 358.0000  P =  506625.      V =  1.00000      Q =  1535.49    
+      KODE = 2  NTRIAL =   5  T = 368.0000  P =  506625.      V =  1.00000      Q =  1316.79    
+      KODE = 2  NTRIAL =   5  T = 378.0000  P =  506625.      V =  1.00000      Q =  1321.82    
+      KODE = 2  NTRIAL =   5  T = 388.0000  P =  506625.      V =  1.00000      Q =  1326.80    
+      KODE = 2  NTRIAL =   5  T = 398.0000  P =  506625.      V =  1.00000      Q =  1331.73    
+      KODE = 2  NTRIAL =   5  T = 408.0000  P =  506625.      V =  1.00000      Q =  1336.60    
+      KODE = 2  NTRIAL =   5  T = 418.0000  P =  506625.      V =  1.00000      Q =  1341.41    
+      KODE = 2  NTRIAL =   5  T = 428.0000  P =  506625.      V =  1.00000      Q =  1346.14    
+      KODE = 2  NTRIAL =   5  T = 438.0000  P =  506625.      V =  1.00000      Q =  1350.79    
+      KODE = 2  NTRIAL =   5  T = 448.0000  P =  506625.      V =  1.00000      Q =  1355.38    
+      KODE = 2  NTRIAL =   5  T = 458.0000  P =  506625.      V =  1.00000      Q =  1359.90    
+      KODE = 2  NTRIAL =   5  T = 468.0000  P =  506625.      V =  1.00000      Q =  1364.36    
+      KODE = 2  NTRIAL =   5  T = 478.0000  P =  506625.      V =  1.00000      Q =  1368.77    
+      KODE = 2  NTRIAL =   5  T = 488.0000  P =  506625.      V =  1.00000      Q =  1373.14    
+      KODE = 2  NTRIAL =   5  T = 298.0000  P = 1.013250E+06  V = 0.856530      Q = -48588.2    
+      KODE = 2  NTRIAL =   4  T = 308.0000  P = 1.013250E+06  V = 0.868193      Q =  3484.12    
+      KODE = 2  NTRIAL =   4  T = 318.0000  P = 1.013250E+06  V = 0.881355      Q =  3439.36    
+      KODE = 2  NTRIAL =   4  T = 328.0000  P = 1.013250E+06  V = 0.897756      Q =  3919.54    
+      KODE = 2  NTRIAL =   5  T = 338.0000  P = 1.013250E+06  V = 0.918634      Q =  4578.26    
+      KODE = 2  NTRIAL =   5  T = 348.0000  P = 1.013250E+06  V = 0.944388      Q =  5310.19    
+      KODE = 2  NTRIAL =   5  T = 358.0000  P = 1.013250E+06  V = 0.974997      Q =  6067.01    
+      KODE = 2  NTRIAL =   5  T = 368.0000  P = 1.013250E+06  V =  1.00000      Q =  5200.68    
+      KODE = 2  NTRIAL =   5  T = 378.0000  P = 1.013250E+06  V =  1.00000      Q =  1337.38    
+      KODE = 2  NTRIAL =   5  T = 388.0000  P = 1.013250E+06  V =  1.00000      Q =  1340.73    
+      KODE = 2  NTRIAL =   5  T = 398.0000  P = 1.013250E+06  V =  1.00000      Q =  1344.19    
+      KODE = 2  NTRIAL =   5  T = 408.0000  P = 1.013250E+06  V =  1.00000      Q =  1347.72    
+      KODE = 2  NTRIAL =   5  T = 418.0000  P = 1.013250E+06  V =  1.00000      Q =  1351.31    
+      KODE = 2  NTRIAL =   5  T = 428.0000  P = 1.013250E+06  V =  1.00000      Q =  1354.92    
+      KODE = 2  NTRIAL =   5  T = 438.0000  P = 1.013250E+06  V =  1.00000      Q =  1358.56    
+      KODE = 2  NTRIAL =   5  T = 448.0000  P = 1.013250E+06  V =  1.00000      Q =  1362.21    
+      KODE = 2  NTRIAL =   5  T = 458.0000  P = 1.013250E+06  V =  1.00000      Q =  1365.87    
+      KODE = 2  NTRIAL =   5  T = 468.0000  P = 1.013250E+06  V =  1.00000      Q =  1369.55    
+      KODE = 2  NTRIAL =   5  T = 478.0000  P = 1.013250E+06  V =  1.00000      Q =  1373.24    
+      KODE = 2  NTRIAL =   5  T = 488.0000  P = 1.013250E+06  V =  1.00000      Q =  1376.97    
+      KODE = 2  NTRIAL =   5  T = 298.0000  P = 2.533125E+06  V = 0.836037      Q = -51653.5    
+      KODE = 2  NTRIAL =   5  T = 308.0000  P = 2.533125E+06  V = 0.848621      Q =  3881.57    
+      KODE = 2  NTRIAL =   5  T = 318.0000  P = 2.533125E+06  V = 0.859801      Q =  2948.90    
+      KODE = 2  NTRIAL =   4  T = 328.0000  P = 2.533125E+06  V = 0.870930      Q =  3012.46    
+      KODE = 2  NTRIAL =   4  T = 338.0000  P = 2.533125E+06  V = 0.883417      Q =  3250.18    
+      KODE = 2  NTRIAL =   4  T = 348.0000  P = 2.533125E+06  V = 0.898516      Q =  3635.08    
+      KODE = 2  NTRIAL =   4  T = 358.0000  P = 2.533125E+06  V = 0.917192      Q =  4134.18    
+      KODE = 2  NTRIAL =   5  T = 368.0000  P = 2.533125E+06  V = 0.939963      Q =  4700.82    
+      KODE = 2  NTRIAL =   6  T = 378.0000  P = 2.533125E+06  V = 0.966843      Q =  5282.49    
+      KODE = 2  NTRIAL =   6  T = 388.0000  P = 2.533125E+06  V = 0.998061      Q =  5909.81    
+      KODE = 2  NTRIAL =   5  T = 398.0000  P = 2.533125E+06  V =  1.00000      Q =  1629.78    
+      KODE = 2  NTRIAL =   6  T = 408.0000  P = 2.533125E+06  V =  1.00000      Q =  1384.65    
+      KODE = 2  NTRIAL =   5  T = 418.0000  P = 2.533125E+06  V =  1.00000      Q =  1384.39    
+      KODE = 2  NTRIAL =   5  T = 428.0000  P = 2.533125E+06  V =  1.00000      Q =  1384.31    
+      KODE = 2  NTRIAL =   5  T = 438.0000  P = 2.533125E+06  V =  1.00000      Q =  1384.70    
+      KODE = 2  NTRIAL =   5  T = 448.0000  P = 2.533125E+06  V =  1.00000      Q =  1385.42    
+      KODE = 2  NTRIAL =   5  T = 458.0000  P = 2.533125E+06  V =  1.00000      Q =  1386.43    
+      KODE = 2  NTRIAL =   5  T = 468.0000  P = 2.533125E+06  V =  1.00000      Q =  1387.72    
+      KODE = 2  NTRIAL =   5  T = 478.0000  P = 2.533125E+06  V =  1.00000      Q =  1389.27    
+      KODE = 2  NTRIAL =   5  T = 488.0000  P = 2.533125E+06  V =  1.00000      Q =  1391.09    
+      KODE = 2  NTRIAL =   6  T = 298.0000  P = 5.066250E+06  V = 0.814991      Q = -53885.3    
+      KODE = 2  NTRIAL =   5  T = 308.0000  P = 5.066250E+06  V = 0.830679      Q =  4736.06    
+      KODE = 2  NTRIAL =   5  T = 318.0000  P = 5.066250E+06  V = 0.844090      Q =  2889.98    
+      KODE = 2  NTRIAL =   4  T = 328.0000  P = 5.066250E+06  V = 0.855780      Q =  2796.13    
+      KODE = 2  NTRIAL =   4  T = 338.0000  P = 5.066250E+06  V = 0.866783      Q =  2833.63    
+      KODE = 2  NTRIAL =   5  T = 348.0000  P = 5.066250E+06  V = 0.878292      Q =  2996.92    
+      KODE = 2  NTRIAL =   5  T = 358.0000  P = 5.066250E+06  V = 0.891393      Q =  3260.10    
+      KODE = 2  NTRIAL =   5  T = 368.0000  P = 5.066250E+06  V = 0.906999      Q =  3606.41    
+      KODE = 2  NTRIAL =   6  T = 378.0000  P = 5.066250E+06  V = 0.925817      Q =  4021.32    
+      KODE = 2  NTRIAL =   6  T = 388.0000  P = 5.066250E+06  V = 0.948256      Q =  4481.34    
+      KODE = 2  NTRIAL =   6  T = 398.0000  P = 5.066250E+06  V = 0.974370      Q =  4955.37    
+      KODE = 2  NTRIAL =   8  T = 408.0000  P = 5.066250E+06  V =  1.00000      Q =  4874.87    
+      KODE = 2  NTRIAL =   6  T = 418.0000  P = 5.066250E+06  V =  1.00000      Q =  1446.83    
+      KODE = 2  NTRIAL =   6  T = 428.0000  P = 5.066250E+06  V =  1.00000      Q =  1440.19    
+      KODE = 2  NTRIAL =   6  T = 438.0000  P = 5.066250E+06  V =  1.00000      Q =  1434.82    
+      KODE = 2  NTRIAL =   5  T = 448.0000  P = 5.066250E+06  V =  1.00000      Q =  1430.59    
+      KODE = 2  NTRIAL =   5  T = 458.0000  P = 5.066250E+06  V =  1.00000      Q =  1427.03    
+      KODE = 2  NTRIAL =   5  T = 468.0000  P = 5.066250E+06  V =  1.00000      Q =  1424.39    
+      KODE = 2  NTRIAL =   5  T = 478.0000  P = 5.066250E+06  V =  1.00000      Q =  1422.48    
+      KODE = 2  NTRIAL =   5  T = 488.0000  P = 5.066250E+06  V =  1.00000      Q =  1421.25    
+
+ Results generated                                                                Time =      0.03

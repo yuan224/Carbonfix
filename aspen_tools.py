@@ -69,6 +69,7 @@ def click_review(Asp):
         break
 
 def reset(Asp):
+    Asp.set_focus()
     Asp.child_window(auto_id="igRibbon_QuickAccessToolbar_1", control_type="ToolBar").child_window(auto_id="igRibbon_btnReset", control_type="Button").click()
     # Asp.child_window(auto_id="igRibbon_QuickAccessToolbar_1", control_type="ToolBar").child_window(title="Reset",auto_id="igRibbon_btnPrpertiesReset",control_type="Button").click()
     Asp.window(title="Reinitialize").child_window(title="OK",auto_id="Button_1",control_type="Button").click()
